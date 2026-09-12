@@ -35,7 +35,7 @@ CCPM 仍可通过 `CCPM`、`规范内核—多投影法` 或 `/ccpm` 独立显�
 - **Projection**：内核面向某个消费者的表示或接口；
 - **Adapter**：只负责协议或运行环境转换，不拥有业务语义；
 - **Invariant**：跨入口、协议、角色和环境都必须成立的规则；
-- **Fallback**：迁移期兼容路径，必须有范围、指标和退出条件。
+- **Fallback**：迁移或能力不足时可选的兼容路径；一旦使用，必须有范围、指标和退出条件。
 
 在 Agent 场景中，CCPM 使用 CKAP（Capability Kernel–Adapter Projection）专项：业务能力、权限、风险、确认、执行、审计和结果验证构成 Capability Kernel；Human UI、Agent Tool、WebMCP、MCP/API、自动化和人工客服是不同 Adapter Projection。Tool、Skill 与 prompt 都不是业务授权或事实源。
 
@@ -46,7 +46,7 @@ CCPM 仍可通过 `CCPM`、`规范内核—多投影法` 或 `/ccpm` 独立显�
 3. 选择靠近真实业务 owner、能表达稳定语义的 Canonical Core；
 4. 定义字段权威、不变量、授权、执行、验证与冲突策略；
 5. 为不同消费者设计只做必要转换的 Projection；
-6. 以完整纵向切片迁移，并为 fallback 定义退出条件；
+6. 以完整纵向切片迁移，按一致性与可逆性选择切换策略，并为实际使用的 fallback 定义退出条件；
 7. 用正常路径、反例、权限边界、重试、并发、降级和真实 E2E 证据关闭任务。
 
 完整规则以 [SKILL.md](SKILL.md) 为准。
@@ -96,13 +96,17 @@ ccpm/
 │   └── openai.yaml
 └── references/
     ├── agent-capability.md
+    ├── behavior-cases.md
+    ├── browser-agent.md
     ├── decision-record.md
     └── domain-patterns.md
 ```
 
 - [SKILL.md](SKILL.md)：适用边界、核心术语、完整工作流和质量门槛；
 - [agents/openai.yaml](agents/openai.yaml)：OpenAI/Codex 的展示与默认提示投影；
-- [references/agent-capability.md](references/agent-capability.md)：Agent、Tool、MCP、WebMCP 与页面执行的 CKAP 专项；
+- [references/agent-capability.md](references/agent-capability.md)：Agent、LLM、RAG、Tool、Skill 与 MCP 的通用 CKAP 专项；
+- [references/browser-agent.md](references/browser-agent.md)：浏览器 Agent、WebMCP、页面执行、动态工具目录与快照专项；
+- [references/behavior-cases.md](references/behavior-cases.md)：维护与评测 CCPM 时使用的进入、退出、授权和组合行为场景；
 - [references/decision-record.md](references/decision-record.md)：CCPM 架构决策记录模板；
 - [references/domain-patterns.md](references/domain-patterns.md)：常见领域的内核形态。
 

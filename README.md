@@ -2,15 +2,15 @@
 
 **Dark Skill Forge（暗黑技能熔炉）**是 dark 的 Agent Skills 规范仓库，也是后续新 Skill 的统一事实源。
 
-仓库首先收录一套可以组合使用的“三剑客”：Focus Compass 负责会话主控和 ADHD 友好呈现，CCPM 负责复杂问题的规范内核与多投影设计，Dark Tribunal 负责风险分级、对抗审查和验证闭环。
+仓库首先收录一套可以组合使用的“三剑客”：Focus Compass 负责会话主控和注意力友好呈现，CCPM 负责复杂问题的规范内核与多投影设计，Dark Tribunal 负责风险分级、对抗审查和验证闭环。
 
 ## 三剑客
 
 | Skill | 定位 | 触发边界 |
 |---|---|---|
-| [Focus Compass](focus-compass/SKILL.md) | 会话入口、任务状态与低摩擦呈现 | 用户显式启用后持续生效，并按任务条件路由另外两个 Skill |
-| [CCPM](ccpm/SKILL.md) | 规范内核、责任边界、不变量与 Projection | 跨页面、服务、协议或角色存在重复语义和事实源漂移时使用 |
-| [Dark Tribunal](dark-tribunal/SKILL.md) | 实施、风险分级、双轮对抗审查与验证 | 功能、修复、重构、行为变化、审查及发布前验收时使用 |
+| [Focus Compass](focus-compass/README.md) | 会话入口、任务状态与低摩擦呈现 | 用户显式启用后持续生效，并按任务条件路由另外两个 Skill |
+| [CCPM](ccpm/README.md) | 规范内核、责任边界、不变量与 Projection | 跨页面、服务、协议或角色存在重复语义和事实源漂移时使用 |
+| [Dark Tribunal](dark-tribunal/README.md) | 实施、风险分级、双轮对抗审查与验证 | 功能、修复、重构、行为变化、审查及发布前验收时使用 |
 
 组合顺序：
 
@@ -19,10 +19,12 @@ Focus Compass（会话主控）
 ├─ 简单任务 ───────────────→ 直接执行并清晰呈现
 ├─ 跨端或事实源不清 ───────→ CCPM
 ├─ 实施、修复或审查 ───────→ Dark Tribunal
-└─ 两者同时命中 ───────────→ CCPM 定结构 → Dark Tribunal 验证 → Focus Compass 呈现
+└─ 两者同时命中 ───────────→ CCPM 定结构 → Dark Tribunal 实施与验证 → Focus Compass 呈现
 ```
 
 自动路由只选择工作方法，不扩大用户目标、任务范围、写入权限或外部操作授权。
+
+三项同时工作时，CCPM 用稳定 ID 交接内核、不变量、Projection 与未知项，Dark Tribunal 引用这些 ID 建立审查覆盖，Focus Compass 只呈现状态。三者不复制业务事实，也不合并用途不同的账本。
 
 ## 仓库约定
 

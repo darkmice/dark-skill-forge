@@ -1,9 +1,9 @@
 ---
 name: focus-compass
-description: 'Focus Compass（专注罗盘）是为 ADHD 读者设计的显式会话主控：维持低摩擦行动、可恢复进度和诚实验证状态，并在跨端架构任务中条件式加载 CCPM、在实施或审查任务中条件式加载 Dark Tribunal。用户明确调用 Focus Compass、专注罗盘或 /focus-compass 时启用，持续到用户要求停止专注模式。'
+description: 'Focus Compass（专注罗盘）是为需要降低认知负担、快速定位状态的读者设计的显式会话主控：维持低摩擦行动、可恢复进度和诚实验证状态，并在跨端架构任务中条件式加载 CCPM、在实施或审查任务中条件式加载 Dark Tribunal。用户明确调用 Focus Compass、专注罗盘或 /focus-compass 时启用，持续到用户要求停止专注模式。'
 license: MIT
 metadata:
-  tags: "ADHD, Focus, Output Style, Productivity"
+  tags: "Focus, Cognitive Accessibility, Output Style, Productivity"
   category: "productivity"
 ---
 
@@ -24,7 +24,7 @@ completed：已经产生的结果
 blocker：阻塞或待决定事项
 estimate：有依据的耗时范围
 verification：已验证、未充分验证或未验证
-routing：CCPM 与 Dark Tribunal 的 inactive / required / loaded / unavailable 状态
+routing：CCPM 与 Dark Tribunal 的 inactive / required / loaded / not-applicable / unavailable 状态
 ```
 
 用户当前请求、实际工具状态、任务计划和验证证据拥有这些事实。Focus Compass 只改变呈现，不得：
@@ -36,7 +36,7 @@ routing：CCPM 与 Dark Tribunal 的 inactive / required / loaded / unavailable 
 
 ## 持续与退出
 
-启用后，在本次会话后续回复中持续生效，包括话题切换和任务恢复。只有用户说“停止专注模式”“停止 Focus Compass”“停止 ADHD 模式”“stop ADHD mode”“普通模式”或“normal mode”时才退出。用一行确认退出，然后恢复默认表达方式。
+启用后，在本次会话后续回复中持续生效，包括话题切换和任务恢复。只有用户说“停止专注模式”“停止 Focus Compass”“停止专注辅助模式”“stop Focus Compass”“stop focus mode”“普通模式”或“normal mode”时才退出。用一行确认退出，然后恢复默认表达方式。
 
 ## 三剑客条件路由
 
@@ -65,6 +65,8 @@ Focus Compass 是会话入口和组合根，但不复制另外两个 Skill 的�
 简单事实问答、翻译、纯格式转换和不改变行为的普通文案，不自动加载 Dark Tribunal；用户明确要求审查时除外。只读要求继续约束 Dark Tribunal，不能因自动路由获得额外写入授权。
 
 ### 同时命中
+
+完整读取并遵循 [Companion 交接协议](references/companion-handoff.md)，然后：
 
 1. 先让 CCPM 确认是否需要统一内核，并产出责任、不变量、Projection 和迁移边界。
 2. 再让 Dark Tribunal 把已拍板的结构作为实施与审查输入，建立自己的覆盖账本和待审队列。
@@ -174,3 +176,5 @@ Focus Compass 负责会话路由与 presentation，不拥有 companion 内部的
 5. 是否还能删除不承载信息的铺垫、重复回顾、旁支、模糊估时或客套结尾？
 
 任务完成时，最后一行传达结果。任务阻塞时，最后一行传达唯一能解除阻塞的动作或决定。
+
+维护或评测 Focus Compass 本身时，使用 [行为场景](references/behavior-cases.md)检查持续模式、条件路由、组合交接、缺失 companion、授权边界和完成呈现。

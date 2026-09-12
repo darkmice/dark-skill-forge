@@ -1,7 +1,7 @@
 interface:
   display_name: "Focus Compass · 专注罗盘"
-  short_description: "ADHD session control with conditional skill routing"
-  default_prompt: "Use $focus-compass as the session controller, loading CCPM or Dark Tribunal only when the task requires them."
+  short_description: "降低认知负担、维持可恢复进度，并按条件路由结构与审查 Skill"
+  default_prompt: "使用 $focus-compass 作为本次会话主控，只在任务条件命中时加载 CCPM 或 Dark Tribunal。"
 
 policy:
   allow_implicit_invocation: false

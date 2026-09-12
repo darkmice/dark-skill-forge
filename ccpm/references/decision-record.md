@@ -5,7 +5,8 @@
 ```markdown
 # <决策主题>
 
-状态：提议 / 已拍板 / 实施中 / 已验证
+决策状态：提议 / 已拍板 / 已否决 / 已替代
+交付状态：未开始 / 实施中 / 已验证 / 阻塞
 范围：涉及的系统、仓库、角色和消费者
 基线：日期、版本、生产/工作树/文档边界
 
@@ -33,13 +34,15 @@
 
 ## 不变量与字段权威
 
-| 对象/字段 | 最终权威 | 执行者 | verifier | 冲突策略 |
-|---|---|---|---|---|
+| 对象/字段 | 不变量 | 最终权威 | 执行者 | verifier | 冲突策略 |
+|---|---|---|---|---|---|
 
 ## Projection Ledger
 
-| Projection/Adapter | Consumer | 输入/输出 | 允许收窄 | 禁止拥有的规则 | 状态 |
-|---|---|---|---|---|---|
+| Source / Canonical | Transform | Projection / Adapter / Sink | Consumer | Policy / Auth / Data boundary | State / Persistence / Cache | Test / Docs / Observability | 状态与证据 |
+|---|---|---|---|---|---|---|---|
+
+每个消费者至少对应一行；共享 source 可以重复引用，但不能复制定义。没有 transform、state 或 cache 时写 `N/A` 并说明依据，不留空假装已经核查。
 
 另行说明：谁负责 decision/planning、实际 execution 使用什么机制、用户 presentation 如何保持可理解和可接管。不要把三者隐含绑定。
 
@@ -47,13 +50,13 @@
 
 描述身份、权限、状态、确认、幂等、失败、恢复和结果验证。
 
-## 迁移与 fallback
+## 迁移与 fallback（如适用）
 
 - 纵向切片顺序
-- feature detection/flag
+- 版本并存、feature detection/flag、原子切换或其他策略及选择依据
 - 观测指标
 - 单位任务的决策轮次、动态上下文成本、执行成功率与用户体验基线
-- fallback 范围
+- fallback 范围；不使用时说明一致性或安全依据
 - 删除旧路径的证据和退出条件
 
 ## 验收
@@ -78,8 +81,8 @@
 2. Canonical Core 是什么，谁拥有它？
 3. 谁最终授权，谁验证完成？
 4. 各 Projection 是否共享同一语义？
-5. fallback 何时使用、何时退出？
-6. 哪些是已落地事实，哪些只是方案？
+5. 如有 fallback，它何时使用、何时退出？
+6. 决策状态与交付状态是否分开，哪些是已落地事实，哪些只是方案？
 7. 实施者还缺少哪些必须裁决的信息？
 
 读者无法一致回答时，先补责任或契约，不要用更多背景说明掩盖歧义。

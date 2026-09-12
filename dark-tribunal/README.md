@@ -128,8 +128,11 @@ dark-tribunal/
 ├── README.md
 ├── SKILL.md
 ├── _meta.json
+├── agents/
+│   └── openai.yaml
 └── references/
     ├── visionary-pm.md
+    ├── behavior-cases.md
     ├── project-attributes.md
     ├── security-data-egress.md
     ├── design-frontend.md
@@ -139,7 +142,9 @@ dark-tribunal/
 ```
 
 - [SKILL.md](SKILL.md)：触发条件、风险模式、核心流程、证据要求和完成门槛；
+- [agents/openai.yaml](agents/openai.yaml)：OpenAI/Codex 的展示与默认提示投影；
 - [references/visionary-pm.md](references/visionary-pm.md)：问题定义、范围、依赖和决策边界；
+- [references/behavior-cases.md](references/behavior-cases.md)：维护与评测 Dark Tribunal 时使用的模式、授权、队列和完成语义场景；
 - [references/project-attributes.md](references/project-attributes.md)：项目属性发现、属性账本，以及 i18n / l10n 强制核查矩阵；
 - [references/security-data-egress.md](references/security-data-egress.md)：敏感数据分类、全出口脱敏、注入防护和 LLM/RAG/Agent 强制审查矩阵；
 - [references/design-frontend.md](references/design-frontend.md)：UI 与前端实施、审查和验证；

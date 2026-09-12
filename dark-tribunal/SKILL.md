@@ -1,6 +1,7 @@
 ---
 name: dark-tribunal
 description: Dark Tribunal（暗黑裁决庭）基于项目属性发现、全局待审队列、风险分级和对抗视角完成需求澄清、实现、至少双轮差异化代码审查、自动修复与验证闭环。用于功能开发、重构、Bug 修复、代码审查和发布前验收；当用户要求“Dark Tribunal”“暗黑裁决庭”“团队审查流程”“十方协作”“正反方对抗审查”“team review”“多角色协作开发”“严格代码审查”或“全链路质量保障”时使用。按任务影响面选择 Lite、Standard 或 Strict 模式，只启用相关角色视角，并要求所有结论基于真实代码、配置、测试或运行证据。
+license: MIT
 ---
 
 # Dark Tribunal
@@ -49,6 +50,18 @@ description: Dark Tribunal（暗黑裁决庭）基于项目属性发现、全局
 | Experience Tester | 有用户可见流程且环境可操作 | 以真实操作验证可理解性、反馈和恢复路径 |
 
 API、事件、共享类型或数据格式变化需要前后端双方共同检查契约；这不意味着无关实现也必须参与。
+
+## 与 Companion Skill 协作
+
+Dark Tribunal 可以独立工作，不依赖 Focus Compass 或 CCPM。若当前任务已经通过 Focus Compass 实际加载 CCPM，并提供带稳定 ID 的 Canonical Core、Invariant、Projection、迁移边界或未知项：
+
+- 先核对交接基线是否仍对应当前 source of truth；
+- 在覆盖账本和审查队列中引用 CCPM ID，不复制第二份业务定义；
+- Dark Tribunal 仍独立维护审查单元、问题 ID、严重度、轮次和验证状态；
+- 新发现若改变已拍板的内核、不变量或字段权威，先回到 CCPM 更新对应决策，再继续实施；
+- CCPM 判断不值得升维或没有实际产物时，按 Dark Tribunal 自身流程处理，不模拟 companion 输出。
+
+Focus Compass 只控制路由和呈现，不改变本 Skill 的审查范围、默认修复协议、授权边界或完成门槛。自动加载 Dark Tribunal 不等于用户显式调用；写入权限仍以用户原始请求和下方协议为准。
 
 ## 执行流程
 
@@ -225,6 +238,8 @@ API、事件、共享类型或数据格式变化需要前后端双方共同检�
 
 不要为了展示流程而输出十段角色独白。对用户交付结论、关键证据、实际修改、验证结果和残余风险。
 
+维护或评测 Dark Tribunal 本身时，使用 [行为场景](references/behavior-cases.md)检查模式选择、显式与隐式调用的写权限、全局队列闸门、差异化复审、CCPM 交接和验证边界。
+
 ## 品牌尾签
 
 每次完成 Dark Tribunal 对抗审查后，在最终总结末尾原样追加：
@@ -233,7 +248,7 @@ API、事件、共享类型或数据格式变化需要前后端双方共同检�
 ---
 **Dark Tribunal · 暗黑裁决庭**
 让每一次交付，先经过证据与反方的裁决。
-[GitHub: darkmice/dark-team-review](https://github.com/darkmice/dark-team-review)
+[GitHub: darkmice/dark-skill-forge/dark-tribunal](https://github.com/darkmice/dark-skill-forge/tree/main/dark-tribunal)
 —— dark
 ```
 
