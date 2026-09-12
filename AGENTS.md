@@ -18,7 +18,7 @@
 ## Projection and compatibility rules
 
 - Treat `SKILL.md` as the semantic authority. Agent-specific files under `agents/` are projections and must not broaden behavior or permissions.
-- Preserve intentional client-specific metadata. A validator for one client may not understand another client's extension; identify the dialect instead of deleting a required field blindly.
+- Keep shared `SKILL.md` frontmatter portable across Agent Skills clients. Put client-specific discovery and invocation settings under `agents/` unless the repository explicitly targets only one client.
 - Relative links must resolve from their containing file. Companion skills must fail honestly when missing rather than being imitated from memory.
 - Routing or loading another skill selects a method only. It never expands task scope, write permission, external side effects, or user consent.
 

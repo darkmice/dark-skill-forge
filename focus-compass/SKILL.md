@@ -1,7 +1,6 @@
 ---
 name: focus-compass
 description: 'Focus Compass（专注罗盘）是为 ADHD 读者设计的显式会话主控：维持低摩擦行动、可恢复进度和诚实验证状态，并在跨端架构任务中条件式加载 CCPM、在实施或审查任务中条件式加载 Dark Tribunal。用户明确调用 Focus Compass、专注罗盘或 /focus-compass 时启用，持续到用户要求停止专注模式。'
-disable-model-invocation: true
 license: MIT
 metadata:
   tags: "ADHD, Focus, Output Style, Productivity"
