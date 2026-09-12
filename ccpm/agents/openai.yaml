@@ -1,0 +1,4 @@
+interface:
+  display_name: "CCPM · 规范内核—多投影法"
+  short_description: "从局部症状收敛统一内核、责任边界与多端投影"
+  default_prompt: "使用 $ccpm 分析这项任务，先找规范内核和责任边界，再设计投影、迁移与验证。"
