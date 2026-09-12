@@ -1,8 +1,24 @@
 # Dark Tribunal
 
-**Dark Tribunal（暗黑裁决庭）**是一个面向所有支持或兼容 `SKILL.md` 机制 Agent 的风险分级对抗审查 Skill。
+**Dark Tribunal（暗黑裁决庭）**是 Dark Skill Forge“三剑客”中的实施与质量裁决 Skill：面向支持或兼容 `SKILL.md` 机制的 Agent，按风险选择审查强度，用对抗视角、修复复审和真实证据关闭任务。
 
-它保留需求、项目管理、设计、前后端正反方、QA、技术裁决和体验验证十个视角，但不再要求每个任务机械走完十个角色。Skill 会根据任务影响面选择 `Lite`、`Standard` 或 `Strict` 模式，只启用相关视角，并要求结论建立在真实代码、测试或运行证据上。
+它保留需求、项目管理、设计、前后端正反方、QA、技术裁决和体验验证十个视角，但不要求每个任务机械走完十个角色。Skill 会根据任务影响面选择 `Lite`、`Standard` 或 `Strict` 模式，只启用相关视角，并要求结论建立在真实代码、测试或运行证据上。
+
+## 在三剑客中的位置
+
+```text
+Focus Compass（会话主控与呈现）
+├─ 实施、修复、审查或高风险任务 ─→ Dark Tribunal
+└─ 同时存在跨端结构问题 ───────→ CCPM 定结构 → Dark Tribunal 实施与验证
+```
+
+- [Focus Compass](../focus-compass/SKILL.md) 根据任务条件加载 Dark Tribunal，并向用户呈现当前状态；
+- [CCPM](../ccpm/SKILL.md) 在需要时先确定 Canonical Core、责任边界、Projection 和迁移门槛；
+- Dark Tribunal 负责实现、风险分级、全局待审队列、差异化复审和验证闭环；
+- CCPM 的投影账本与 Dark Tribunal 的审查队列保持独立，Focus Compass 不创建第三份事实源；
+- 自动路由只选择工作方法，不扩大任务范围、写权限、外部副作用或用户授权。
+
+Dark Tribunal 仍可通过 `Dark Tribunal`、`暗黑裁决庭` 或 `/dark-tribunal` 独立显式调用，不要求先启用 Focus Compass。
 
 ## 解决什么问题
 
@@ -45,21 +61,18 @@
 
 ## 安装
 
-### 安装到 Agent 的 Skills 目录
-
-Claude Code：
+本 Skill 的维护源是 [Dark Skill Forge](https://github.com/darkmice/dark-skill-forge)。克隆整个仓库后，将 Dark Tribunal 链接到通用 Agent Skills 发现目录：
 
 ```bash
-git clone https://github.com/darkmice/dark-team-review.git ~/.claude/skills/dark-tribunal
+git clone https://github.com/darkmice/dark-skill-forge.git
+cd dark-skill-forge
+mkdir -p ~/.agents/skills
+ln -s "$PWD/dark-tribunal" ~/.agents/skills/dark-tribunal
 ```
 
-Codex：
+已存在同名文件或目录时，先确认来源与本地改动，不要直接覆盖。客户端必须支持 Agent Skills 或扫描 `~/.agents/skills`；安装后通常需要新建或刷新会话。
 
-```bash
-git clone https://github.com/darkmice/dark-team-review.git ~/.codex/skills/dark-tribunal
-```
-
-其他支持 `SKILL.md` 的 Agent：将仓库克隆或复制到该 Agent 的 Skill 发现目录，并确保目录名为 `dark-tribunal`。具体目录和刷新方式以对应 Agent 的当前文档为准。
+独立仓库 [darkmice/dark-team-review](https://github.com/darkmice/dark-team-review) 仅作为发行镜像保留，后续修改以 Dark Skill Forge 为准。
 
 安装后新建或刷新 Agent 会话，可通过以下表达触发：
 
@@ -111,9 +124,10 @@ Agent：
 ## 目录结构
 
 ```text
-.
+dark-tribunal/
 ├── README.md
 ├── SKILL.md
+├── _meta.json
 └── references/
     ├── visionary-pm.md
     ├── project-attributes.md
@@ -135,4 +149,13 @@ Agent：
 
 ## License
 
-MIT
+[MIT](../LICENSE) © 2026 dark
+
+---
+**Dark Tribunal · 暗黑裁决庭**
+
+让每一次交付，先经过证据与反方的裁决。
+
+[GitHub: darkmice/dark-skill-forge/dark-tribunal](https://github.com/darkmice/dark-skill-forge/tree/main/dark-tribunal)
+
+—— dark
