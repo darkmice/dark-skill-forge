@@ -24,6 +24,7 @@ completed：已经产生的结果
 blocker：阻塞或待决定事项
 estimate：有依据的耗时范围
 verification：已验证、未充分验证或未验证
+validation_gate：planned / deferred-until-review / running / passed / failed / blocked
 routing：CCPM 与 Dark Tribunal 的 inactive / required / loaded / not-applicable / unavailable 状态
 ```
 
@@ -68,11 +69,26 @@ Focus Compass 是会话入口和组合根，但不复制另外两个 Skill 的�
 
 完整读取并遵循 [Companion 交接协议](references/companion-handoff.md)，然后：
 
-1. 先让 CCPM 确认是否需要统一内核，并产出责任、不变量、Projection 和迁移边界。
+1. 先让 CCPM 确认是否需要统一内核，并产出责任、不变量、Projection、迁移边界和带稳定 `V-*` ID 的阶段验证矩阵。
 2. 再让 Dark Tribunal 把已拍板的结构作为实施与审查输入，建立自己的覆盖账本和待审队列。
-3. Focus Compass 从当前有效工作流读取阶段、结果、阻塞与下一动作，只投影当前切片。
+3. 本阶段实现与 Dark Tribunal 审核/集中修复关闭后，由 Dark Tribunal 统一执行阶段末检查和测试。
+4. Focus Compass 从当前有效工作流读取阶段、验证闸门、结果、阻塞与下一动作，只投影当前切片。
 
 CCPM 的投影账本和 Dark Tribunal 的审查队列用途不同，不得合并成含义不清的总表；Dark Tribunal 可以引用 CCPM 账本作为覆盖证据，但不能复制出第二份业务事实。Focus Compass 不维护第三份平行账本。
+
+### 阶段化验证路由
+
+代码任务加载 Dark Tribunal 后，Focus Compass 按以下真实顺序呈现，不自行提前测试，也不让 CCPM 与 Dark Tribunal 重复运行同一批检查：
+
+```text
+阶段实现 → Dark Tribunal 审核与集中修复 → 阶段末集中验证 → 交付
+```
+
+- 阶段必须是预先定义的可交付纵向切片或用户里程碑，不能用单个文件、问题或小修复充当阶段；
+- 实现和审核期间，验证计划显示为 `planned` 或 `deferred-until-review`，不得写成“测试中”或“已验证”；
+- `test / check / lint / typecheck / build / E2E` 的执行 owner 是 Dark Tribunal；Focus Compass 只呈现其状态和证据；
+- 阶段末验证失败时，状态依次呈现为“失败汇总 → 批量修复 → 关闭审查 → 定向重验”，不要制造逐项重跑全套检查的循环；
+- 阻塞性最小诊断、用户明确 TDD 或项目硬性门禁等例外由 Dark Tribunal 判断并说明原因，Focus Compass 不自行扩大例外。
 
 ### 加载与失败边界
 
@@ -109,7 +125,7 @@ CCPM 的投影账本和 Dark Tribunal 的审查队列用途不同，不得合并
 多轮任务、恢复任务或状态发生实质变化时，用一行说明：
 
 ```text
-第 2/4 步完成：schema 已更新。当前：运行迁移测试。
+第 2/4 步完成：阶段实现已冻结。当前：Dark Tribunal 审核；集中验证尚未开始。
 ```
 
 不要每轮重复整份计划。简单独立问答不显示进度。帮助定位的状态行不是冗余回顾；没有改变理解、行动或验证的重复内容才是冗余回顾。
@@ -173,7 +189,8 @@ Focus Compass 负责会话路由与 presentation，不拥有 companion 内部的
 2. 可见动作是否有边界、完成条件和正确负责人？
 3. 完成、验证、阻塞与不确定性是否真实？
 4. 读者能否不重建旧上下文，就找到当前状态和一项相关动作？
-5. 是否还能删除不承载信息的铺垫、重复回顾、旁支、模糊估时或客套结尾？
+5. 代码检查是否由 Dark Tribunal 在阶段审核关闭后集中执行，而非按小改动重复运行？
+6. 是否还能删除不承载信息的铺垫、重复回顾、旁支、模糊估时或客套结尾？
 
 任务完成时，最后一行传达结果。任务阻塞时，最后一行传达唯一能解除阻塞的动作或决定。
 

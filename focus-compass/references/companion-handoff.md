@@ -14,17 +14,21 @@ I-*：Invariant、字段权威、授权与冲突策略
 P-*：Projection/Adapter、consumer、policy、state、test/docs/observability
 M-*：迁移切片、切换策略、适用时的 fallback 与退出条件
 U-*：未知项、假设、待裁决事项
+V-*：阶段边界、完成条件、验证矩阵与 planned/deferred-until-review 状态
 ```
 
 CCPM 判断不值得升维时，明确交接 `not-applicable` 及证据；Dark Tribunal 若仍因实施或审查任务而需要加载，则按自身流程处理局部任务，不虚构 CCPM 产物。
 
+`V-*` 的阶段边界、完成条件和验证矩阵由 CCPM 定义；交接后 `running / passed / failed / blocked` 状态与实际证据由 Dark Tribunal 写入，Focus Compass 只读投影。
+
 ## Dark Tribunal 消费规则
 
 - 先核对交接基线是否仍对应当前 source of truth；过期或冲突时把对应 ID 标记为 blocked，不静默改写；
-- 变更覆盖账本和审查队列引用 `C-* / I-* / P-* / M-* / U-*`，不复制一份新的业务定义；
+- 变更覆盖账本和审查队列引用 `C-* / I-* / P-* / M-* / U-* / V-*`，不复制一份新的业务或验证定义；
 - 新发现若改变 Canonical Core、Invariant、字段权威或迁移边界，先回到 CCPM 更新原 ID 或新增 ID，再继续实施；
 - Dark Tribunal 自己拥有审查单元、问题 ID、严重度、轮次和验证状态，这些不写回 CCPM 投影账本；
 - `U-*` 只阻塞依赖该未知项的实现或验收，不自动阻塞无关表面。
+- Dark Tribunal 独占 `V-*` 的执行调度：完成阶段实现、两轮审核、集中修复和必要关闭轮后，再统一执行 test/check/lint/typecheck/build/E2E；CCPM 不重复执行，Focus Compass 不自行启动。
 
 ## Dark Tribunal → Focus Compass
 
@@ -36,10 +40,13 @@ next_action + owner
 verified outcomes
 blockers / required decisions
 residual risk / unverified boundary
+validation gate：planned / deferred-until-review / running / passed / failed / blocked
 routing status
 ```
 
 Focus Compass 不复制 core、projection 或审查队列，不因隐藏内容而改变完成状态。CCPM 与 Dark Tribunal 的完成门槛均满足后，才能把组合任务呈现为完成。
+
+阶段末集中验证失败时，Dark Tribunal 先汇总失败并批量修复，再完成对应关闭审查和定向重验；Focus Compass 只呈现这一条状态链，不把每个失败拆成重复的全量验证阶段。
 
 ## 授权与失败边界
 

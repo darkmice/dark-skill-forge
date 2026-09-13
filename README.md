@@ -2,7 +2,7 @@
 
 **Dark Skill Forge（暗黑技能熔炉）**是 dark 的 Agent Skills 规范仓库，也是后续新 Skill 的统一事实源。
 
-仓库首先收录一套可以组合使用的“三剑客”：Focus Compass 负责会话主控和注意力友好呈现，CCPM 负责复杂问题的规范内核与多投影设计，Dark Tribunal 负责风险分级、对抗审查和验证闭环。
+仓库首先收录一套可以组合使用的“三剑客”：Focus Compass 负责会话主控和注意力友好呈现，CCPM 负责复杂问题的规范内核与多投影设计，Dark Tribunal 负责风险分级、对抗审查和审核后的阶段末集中验证。
 
 ## 三剑客
 
@@ -19,12 +19,14 @@ Focus Compass（会话主控）
 ├─ 简单任务 ───────────────→ 直接执行并清晰呈现
 ├─ 跨端或事实源不清 ───────→ CCPM
 ├─ 实施、修复或审查 ───────→ Dark Tribunal
-└─ 两者同时命中 ───────────→ CCPM 定结构 → Dark Tribunal 实施与验证 → Focus Compass 呈现
+└─ 两者同时命中 ───────────→ CCPM 定结构 → 实施 → Dark Tribunal 审核/集中修复 → 阶段末集中验证 → Focus Compass 呈现
 ```
 
 自动路由只选择工作方法，不扩大用户目标、任务范围、写入权限或外部操作授权。
 
-三项同时工作时，CCPM 用稳定 ID 交接内核、不变量、Projection 与未知项，Dark Tribunal 引用这些 ID 建立审查覆盖，Focus Compass 只呈现状态。三者不复制业务事实，也不合并用途不同的账本。
+三项同时工作时，CCPM 用稳定 ID 交接内核、不变量、Projection、未知项与阶段验证矩阵，Dark Tribunal 引用这些 ID 建立审查覆盖和验证单元，Focus Compass 只呈现状态。三者不复制业务事实，也不合并用途不同的账本。
+
+代码任务先定义可交付阶段与验证矩阵，但不在每个文件或小修复后反复运行 test、check、lint、typecheck、build 或 E2E。当前阶段实现与 Dark Tribunal 审核/集中修复关闭后，再由 Dark Tribunal 统一执行阶段末验证；失败项批量修复、关闭审查后定向重验。
 
 ## 仓库约定
 
@@ -32,7 +34,7 @@ Focus Compass（会话主控）
 - `SKILL.md` 是该 Skill 的规范入口，条件性细节放入 `references/`；
 - `agents/` 只存放不同 Agent 客户端的发现或调用投影；
 - 本仓库是持续维护的 canonical source，已存在的独立仓库作为发行镜像保留；
-- 新 Skill 必须完成结构校验、行为场景验证和差异化复审后，才可称为可用。
+- 新 Skill 必须先完成差异化复审，再在阶段末完成结构校验和行为场景验证，才可称为可用。
 
 具体维护规则见 [AGENTS.md](AGENTS.md)。
 

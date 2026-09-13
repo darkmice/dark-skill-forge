@@ -24,6 +24,9 @@
 
 ## Validation and release
 
+- For code work, define the validation matrix before implementation, but run routine test/check/lint/typecheck/build/E2E only after the current delivery stage has completed Dark Tribunal review and batched repairs. A stage is a user milestone or independently deliverable vertical slice, not a file, issue, or small fix.
+- Do not rerun the same validation suite after each edit. If stage-end validation fails, batch the failures, repair them, close the affected review surface, then rerun failed checks and affected regression; rerun the full batch only when the impact expanded or cached evidence is invalid.
+- Before review, run only a blocking minimal diagnostic when it is necessary to continue safely, and label it diagnostic-only rather than pass evidence. Explicit TDD requests, mandatory project gates, and immediate security-isolation evidence may override timing, not scope or honesty.
 - Validate frontmatter and every changed YAML, TOML, script, and relative link with tools appropriate to the target client.
 - Test meaningful behavior scenarios, including normal use, exclusions, conflicts, missing dependencies, authorization boundaries, and incomplete verification.
 - Review from source to projections, then perform a second pass from consumer scenarios back to the source. Fix confirmed defects and repeat a closing pass after second-round changes.

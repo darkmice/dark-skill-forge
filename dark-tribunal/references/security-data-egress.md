@@ -95,6 +95,8 @@
 
 ## 6. 验证方法
 
+本节场景在审核中先登记为阶段验证矩阵，默认在两轮 security/data-egress 审核、集中修复和必要关闭轮完成后统一执行。只有继续审核会扩大即时安全损害或无法判断隔离是否成立时，才提前运行主 Skill 允许的最小安全诊断；不得借此重复执行整套 canary 或对抗测试。
+
 - 使用合成 canary secret、token、手机号/证件样例和租户标识，不把真实凭据或真实个人数据写进测试、日志或提交。
 - 在最靠近真实出口的位置断言 canary 不出现在序列化请求、headers、日志、trace、模型 payload、embedding/vector 写入、tool call、下载和最终响应中；只测试脱敏函数不足以证明出口安全。
 - 对 allowlist、嵌套对象、自由文本、附件、异常、重试、fallback、批量和 streaming 场景做定向测试。

@@ -1,4 +1,4 @@
 interface:
   display_name: "Dark Tribunal · 暗黑裁决庭"
-  short_description: "按风险实施、对抗审查、修复复审并用真实证据关闭任务"
-  default_prompt: "使用 $dark-tribunal 在当前授权范围内实施或审查这项任务，按风险选择模式并用可验证证据关闭。"
+  short_description: "按风险实施、对抗审查、集中修复并在阶段末统一验证"
+  default_prompt: "使用 $dark-tribunal 在当前授权范围内实施或审查这项任务，先完成阶段审核与集中修复，再统一运行阶段末验证。"

@@ -1,7 +1,7 @@
 interface:
   display_name: "Focus Compass · 专注罗盘"
   short_description: "降低认知负担、维持可恢复进度，并按条件路由结构与审查 Skill"
-  default_prompt: "使用 $focus-compass 作为本次会话主控，只在任务条件命中时加载 CCPM 或 Dark Tribunal。"
+  default_prompt: "使用 $focus-compass 作为本次会话主控，只在任务条件命中时加载 CCPM 或 Dark Tribunal；代码任务由 Dark Tribunal 审核后再做阶段末集中验证。"
 
 policy:
   allow_implicit_invocation: false

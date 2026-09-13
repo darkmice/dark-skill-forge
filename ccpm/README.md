@@ -14,7 +14,7 @@ Focus Compass（会话主控与呈现）
 
 - [Focus Compass](../focus-compass/SKILL.md) 根据任务条件加载 CCPM，并向用户呈现当前状态；
 - CCPM 负责 Canonical Core、Invariant、责任边界、Projection 和迁移门槛；
-- [Dark Tribunal](../dark-tribunal/SKILL.md) 负责实现、风险分级、对抗审查和验证闭环；
+- [Dark Tribunal](../dark-tribunal/SKILL.md) 负责实现、风险分级、对抗审查和阶段末集中验证；
 - CCPM 的投影账本与 Dark Tribunal 的审查队列保持独立，Focus Compass 不创建第三份事实源；
 - 自动路由只选择工作方法，不扩大任务范围、写权限、外部副作用或用户授权。
 
@@ -46,8 +46,10 @@ CCPM 仍可通过 `CCPM`、`规范内核—多投影法` 或 `/ccpm` 独立显�
 3. 选择靠近真实业务 owner、能表达稳定语义的 Canonical Core；
 4. 定义字段权威、不变量、授权、执行、验证与冲突策略；
 5. 为不同消费者设计只做必要转换的 Projection；
-6. 以完整纵向切片迁移，按一致性与可逆性选择切换策略，并为实际使用的 fallback 定义退出条件；
-7. 用正常路径、反例、权限边界、重试、并发、降级和真实 E2E 证据关闭任务。
+6. 以完整纵向切片迁移，定义阶段完成条件和验证矩阵，按一致性与可逆性选择切换策略，并为实际使用的 fallback 定义退出条件；
+7. 交给 Dark Tribunal 完成实现与审核，再在阶段闸门集中执行检查和测试，用正常路径、反例、权限边界、重试、并发、降级和真实 E2E 证据关闭任务。
+
+CCPM 只规定“验证哪些不变量和 Projection”，不与 Dark Tribunal 重复运行验证。代码实施会加载 Dark Tribunal；若它不可用，只交付结构与验证矩阵，不伪称审核或阶段验证完成。代码任务不会在每个文件、Projection 或小修复后反复执行 lint、typecheck、build 或测试。
 
 完整规则以 [SKILL.md](SKILL.md) 为准。
 

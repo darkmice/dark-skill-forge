@@ -43,7 +43,7 @@ CCPM（Canonical Core–Projection Method）把“高维度解决低维度问题
 
 ### 1. 先判断是否值得升维
 
-读取当前事实源、调用链、消费者、配置、测试和文档。区分：
+读取当前事实源、调用链、消费者、配置、测试定义/历史结果和文档；此处是建立事实与验证计划，不提前执行常规测试或检查。区分：
 
 - 用户目标；
 - 表面症状；
@@ -124,12 +124,15 @@ presentation：用户如何看见、理解、暂停和接管
 迁移单位是完整纵向切片：core、policy、executor、projection、consumer、test、docs 和观测一起闭环。
 
 - 先冻结事实基线和覆盖账本；
+- 在实施前定义每个纵向切片的阶段完成条件与验证矩阵；单个文件、问题或小修复不能临时当成阶段；
 - 根据可逆性、兼容性和数据一致性选择版本并存、feature detection/flag、原子切换或其他策略；
 - 只有旧路径不会破坏一致性或安全边界时才把它作为 fallback，并记录使用指标；
 - 新路径真实 E2E 后才删除重复；
 - 使用了 fallback 却没有退出条件时，不得称为迁移完成。
 
 ### 7. 用证据关闭任务
+
+CCPM 负责定义要验证的不变量、Projection、消费者和失败场景，不拥有组合模式下测试与检查的执行调度。若任务进入实施，完整读取并加载 [Dark Tribunal](../dark-tribunal/SKILL.md)：先完成纵向切片实现与 Dark Tribunal 审核/集中修复，再由 Dark Tribunal 在阶段闸门统一运行 test、check、lint、typecheck、build、E2E 或真实操作；不要在每个 Projection 或小修复后重复执行。若任务仅为分析或架构设计，不运行实现验证并明确边界；若实施所需的 Dark Tribunal 缺失或不可读，只交付 CCPM 结构与验证矩阵，并把实施闭环标记为 `unavailable`，不得模拟其审核或宣称阶段完成。
 
 验证至少覆盖：
 
@@ -142,13 +145,29 @@ presentation：用户如何看见、理解、暂停和接管
 
 测试通过只证明测试观察到的范围。生产、外部系统或真实用户链未验证时明确披露。
 
+## 与 Dark Tribunal 的阶段验证交接
+
+CCPM 向 Dark Tribunal 交接独立的 `V-*` 验证记录；存在迁移时，每个 `V-*` 关联对应的 `M-*` 纵向切片：
+
+```text
+V-* / related M-* / stage boundary / completion condition
+validation matrix：invariant / projection / consumer / scenario / expected evidence
+validation status：planned / deferred-until-review / running / passed / failed / blocked
+```
+
+- `planned` 只表示验证已设计，不表示运行或通过；
+- Dark Tribunal 接管实施/审查后，CCPM 不再启动同一批验证；
+- 审核期间发现新的消费者或不变量时，更新原验证矩阵，仍留到阶段末集中执行；
+- 集中验证失败若暴露内核、字段权威或迁移边界错误，先更新对应 `C-* / I-* / P-* / M-*`，再交回 Dark Tribunal 批量修复、关闭审查与定向重验；
+- 用户明确要求 TDD、项目硬性门禁或安全 Blocker 的例外，由 Dark Tribunal 记录原因并控制最小执行范围。
+
 ## 交付形态
 
 根据用户请求选择最小必要产物：
 
 - **分析/诊断**：输出症状、真实目标、投影账本、内核候选、决定性证据和未知项；保持只读。
 - **架构/RFC**：使用 [CCPM 决策记录模板](references/decision-record.md)，拍板内核、不变量、责任和迁移门槛。
-- **实现/重构**：先确认目标内核和授权范围，再实现一个完整纵向切片并验证所有受影响投影。
+- **实现/重构**：先确认目标内核、授权范围、纵向切片和验证矩阵，再交由 Dark Tribunal 完成实施、审核与阶段末集中验证。
 - **普通局部修复**：若第 1 步证明不需要共享内核，直接修复，不制造 CCPM 仪式。
 
 维护或评测 CCPM 本身时，使用 [行为场景](references/behavior-cases.md) 检查应进入、应退出、信息不足、授权边界和专项路由，不能只依赖 frontmatter 或链接校验。
@@ -165,5 +184,6 @@ presentation：用户如何看见、理解、暂停和接管
 6. 是否把决策频率、执行机制和用户呈现错误地绑定在一起？
 7. 如使用 fallback，其范围、指标和退出条件是什么？
 8. 哪些证据证明跨投影一致，哪些仍未验证？
+9. 验证矩阵是否只由 Dark Tribunal 在审核关闭后集中执行，是否避免按文件、Projection 或小修复重复运行？
 
 答不出来时不要用“高维方案”“平台化”“统一架构”等抽象词宣称完成。

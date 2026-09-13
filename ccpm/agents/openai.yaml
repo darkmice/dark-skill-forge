@@ -1,4 +1,4 @@
 interface:
   display_name: "CCPM · 规范内核—多投影法"
   short_description: "从局部症状判断是否需要统一内核，并建立责任边界与可验证多端投影"
-  default_prompt: "使用 $ccpm 处理这项任务，先判断是否值得升维；若值得，再确定规范内核、责任边界、投影、迁移与验证。"
+  default_prompt: "使用 $ccpm 处理这项任务，先判断是否值得升维；若值得，再确定规范内核、责任边界、投影、迁移与验证矩阵，并把实施、审核和阶段末集中验证交给 Dark Tribunal。"

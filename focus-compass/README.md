@@ -11,14 +11,16 @@ Focus Compass（路由与呈现）
 ├─ 简单任务 ───────────────→ 直接处理
 ├─ 跨端、重复规则或事实源不清 → CCPM
 ├─ 实施、修复、审查或高风险 ─→ Dark Tribunal
-└─ 同时命中 ───────────────→ CCPM 定结构 → Dark Tribunal 验证 → Focus Compass 呈现
+└─ 同时命中 ───────────────→ CCPM 定结构 → 实施 → Dark Tribunal 审核/集中修复 → 阶段末集中验证 → Focus Compass 呈现
 ```
 
 - [CCPM](../ccpm/SKILL.md) 拥有 Canonical Core、Invariant、Projection 和迁移边界；
-- [Dark Tribunal](../dark-tribunal/SKILL.md) 拥有风险模式、审查队列、问题状态和验证闭环；
+- [Dark Tribunal](../dark-tribunal/SKILL.md) 拥有风险模式、审查队列、问题状态和审核后的阶段末集中验证；
 - Focus Compass 只拥有会话路由和呈现，不建立第三份事实账本；
 - 同时加载两个 companion 时，使用[交接协议](references/companion-handoff.md)引用稳定 ID；
 - 自动路由只选择方法，不扩大任务范围、写权限或外部操作授权。
+
+代码任务不会在每个文件或小修复后重复运行测试与检查。Focus Compass 只呈现 `planned / deferred-until-review / running / passed / failed / blocked`：由 CCPM 定义验证对象，Dark Tribunal 完成阶段审核与集中修复后统一执行验证。
 
 完整规则以 [SKILL.md](SKILL.md) 为准。
 

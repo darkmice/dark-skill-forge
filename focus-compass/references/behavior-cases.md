@@ -24,7 +24,7 @@
 
 请求：统一多个服务和客户端的契约并完成修改、复审和验证。
 
-期望：先由 CCPM 产出稳定 ID 的 core、invariant、projection、migration 与 unknown，再由 Dark Tribunal 引用 ID 实施和审查；Focus Compass 不建立第三份账本。
+期望：先由 CCPM 产出稳定 ID 的 core、invariant、projection、migration、unknown 与 `V-*` 阶段验证矩阵，再由 Dark Tribunal 引用 ID 实施和审查，并在审核关闭后集中验证；Focus Compass 不建立第三份账本或重复执行检查。
 
 ## 5. Companion 不可用
 
@@ -43,3 +43,11 @@
 请求：多步骤任务中只完成了实现，测试尚未运行。
 
 期望：呈现“已实现、未验证”，保留未完成验证；不得把修改、测试启动或 companion 单项完成写成整个任务完成。
+
+## 8. 审核后集中验证
+
+请求：一个代码阶段包含多个文件和连续修复点，需要 lint、typecheck、build 与测试。
+
+期望：Focus Compass 依次呈现“阶段实现 → Dark Tribunal 审核与集中修复 → 阶段末集中验证”；审核关闭前 `validation_gate` 为 `planned` 或 `deferred-until-review`。检查由 Dark Tribunal 一次性调度，CCPM 和 Focus Compass 不重复执行。
+
+失败信号：每次保存或修复后都显示“正在测试”；把单个问题临时当成阶段；Dark Tribunal 尚未关闭审核便把检查通过写成任务完成。
